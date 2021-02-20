@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+
+  webserver:
+    image: nginx
+    networks:
+      - nginxnet
+    volumes:
+      - D:\develop\nginx:/usr/share/nginx/html
+    ports:
+      - 8080:80
+    
+networks:
+  nginxnet:
+
+volumes:
+  wordpress:
+  db:
