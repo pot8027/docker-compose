@@ -1,0 +1,43 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres
+    networks:
+      - djangonet
+    volumes:
+      - postgres_db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=password
+
+  web:
+    image: akiyoshi827/django
+    networks:
+      - djangonet
+    volumes:
+      - D:\develop\django\test:/code
+    tty: true
+    user: root
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    command: python3 firstapp/manage.py runserver 0.0.0.0:8000
+
+  webserver:
+    image: nginx
+    networks:
+      - djangonet
+    volumes:
+      - D:\develop\django\test\contents:/usr/share/nginx/html
+    ports:
+      - 8080:80
+
+volumes:
+  postgres_db:
+
+networks:
+  djangonet:
