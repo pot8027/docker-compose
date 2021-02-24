@@ -21,20 +21,21 @@ services:
       - D:\develop\django\test:/code
     tty: true
     user: root
-    ports:
-      - 8000:8000
     depends_on:
       - db
-    command: python3 firstapp/manage.py runserver 0.0.0.0:8000
+    command: 
+      bash -c "cd firstapp && uwsgi --http :8000 --module firstapp.wsgi"
 
   webserver:
     image: nginx
     networks:
       - djangonet
     volumes:
-      - D:\develop\django\test\contents:/usr/share/nginx/html
+      - D:\develop\django\nginx\nginx.conf:/etc/nginx/nginx.conf
     ports:
-      - 8080:80
+      - 8080:8080
+    depends_on:
+      - web
 
 volumes:
   postgres_db:
