@@ -18,12 +18,13 @@ services:
     networks:
       - djangonet
     volumes:
-      - D:\develop\django\test:/code
+      - D:\develop\django:/code
     tty: true
     user: root
     depends_on:
       - db
     command: 
+      # uwsgiでdjango起動
       bash -c "cd firstapp && uwsgi --http :8000 --module firstapp.wsgi"
 
   webserver:
